@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node server.mjs",
     "smoke": "node test/smoke.mjs",
-    "test": "node --test test/install.test.mjs",
+    "test": "node --test test/install.test.mjs test/timeout.test.mjs",
     "check": "node --check cli.mjs && node --check server.mjs && for f in lib/*.mjs test/*.mjs; do node --check \"$f\"; done",
     "prepare": "git config core.hooksPath .githooks || true"
   },

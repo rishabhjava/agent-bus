@@ -97,7 +97,8 @@ server.registerTool(
       "Ask another local agent a question and get its answer (headless, blocking). " +
       "Pass session_id to ask within an existing thread's context — the answer comes from a snapshot of that thread (for Claude Code, a hidden parallel branch in the same session); a live interactive view of it will not see the exchange. " +
       "Codex runs sandboxed read-only unless allow_writes. Cursor is not askable (no CLI). " +
-      `Relay depth is capped at ${MAX_DEPTH} to prevent agent-to-agent loops.`,
+      `Relay depth is capped at ${MAX_DEPTH} to prevent agent-to-agent loops. ` +
+      "Note: the MCP host running THIS tool call may enforce its own tool-call timeout the bus cannot lift; for very long work prefer handoff_session over a long ask.",
     inputSchema: {
       agent: agentEnum,
       prompt: z.string().min(1),
@@ -106,7 +107,10 @@ server.registerTool(
       from: z.string().optional().describe("Who is asking, e.g. 'claude session abc123'"),
       model: z.string().optional().describe("claude only: model override, e.g. 'haiku'"),
       allow_writes: z.boolean().optional().describe("codex only: workspace-write sandbox"),
-      timeout_s: z.number().int().min(30).max(600).optional().describe("Default 240"),
+      timeout_s: z
+        .union([z.literal(0), z.number().int().min(30)])
+        .optional()
+        .describe("Seconds to wait for the callee (default 240). 0 = no bus-side timeout, wait until the callee finishes."),
     },
   },
   jsonTool("askAgent", askAgent),
