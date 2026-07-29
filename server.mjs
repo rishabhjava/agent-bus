@@ -95,7 +95,7 @@ server.registerTool(
   {
     description:
       "Ask another local agent a question and get its answer (headless, blocking). " +
-      "Pass session_id to ask within an existing thread's context — note this forks the thread if it is open interactively. " +
+      "Pass session_id to ask within an existing thread's context — the answer comes from a snapshot of that thread (for Claude Code, a hidden parallel branch in the same session); a live interactive view of it will not see the exchange. " +
       "Codex runs sandboxed read-only unless allow_writes. Cursor is not askable (no CLI). " +
       `Relay depth is capped at ${MAX_DEPTH} to prevent agent-to-agent loops.`,
     inputSchema: {

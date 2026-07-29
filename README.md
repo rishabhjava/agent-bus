@@ -78,7 +78,7 @@ Letting agents talk to each other is letting untrusted inputs talk to each other
 
 - Prototype, built and verified on one machine in one sitting. Parsers for the vendors' session formats are defensive but the formats are undocumented and will drift.
 - Cursor is read-only (discovery + handoff source) until its headless CLI is present.
-- Resuming a thread that is currently open interactively **forks** it — you're talking to a copy of its context, not injecting into the live TTY. True live injection needs harness cooperation; that's the interesting next problem.
+- Asking a thread that is currently open interactively does **not** inject into the live TTY — the callee answers out-of-band, from a snapshot of that thread's context. With Claude Code, the exchange isn't even a separate session: it lands in the *same* session file as a parallel branch (same session id, different parent chain), which the live view never displays. Observed in practice when a Codex session used `ask_agent` on the live Claude Code session that was building this project — the answer was correct, and the live session only learned about the exchange by reading its own transcript off disk. True live injection needs harness cooperation; that's the interesting next problem.
 
 ## License
 
