@@ -48,14 +48,27 @@ So from inside any agent you can say things like:
 
 Requires Node 18+, macOS (session-store paths are macOS-specific for now), and whichever agents you use on the machine.
 
+One command — detects which hosts are installed, registers the bus with each, merges with any existing MCP config, takes backups before rewriting anything, and is safe to re-run:
+
 ```bash
-# register with each agent you use — npx fetches the package on first spawn:
+npx -y agent-bus install            # registers with Claude Code, Codex, and Cursor
+npx -y agent-bus install --dry-run  # preview what would change, modify nothing
+```
+
+Upgrades are automatic when registered via npx (`npx -y` resolves the latest published version each spawn); re-run `install` only if registration instructions change.
+
+<details>
+<summary>Manual registration</summary>
+
+```bash
 claude mcp add --scope user agent-bus -- npx -y agent-bus
 codex mcp add agent-bus -- npx -y agent-bus
 # Cursor: add to ~/.cursor/mcp.json →  { "mcpServers": { "agent-bus": { "command": "npx", "args": ["-y", "agent-bus"] } } }
 ```
 
-Or from a clone (for development): `git clone https://github.com/rishabhjava/agent-bus && cd agent-bus && npm install`, then register `node <path>/server.mjs` instead of `npx -y agent-bus`.
+From a clone (for development): `git clone https://github.com/rishabhjava/agent-bus && cd agent-bus && npm install`, then `node cli.mjs install` — it registers the clone's path instead of npx.
+
+</details>
 
 > Codex note: Codex prompts for approval on an MCP server's first tool call ("always allow" persists it). Headless `codex exec` cannot answer that prompt — to use the bus headlessly, set `default_tools_approval_mode = "auto"` under `[mcp_servers.agent-bus]` in `~/.codex/config.toml`.
 

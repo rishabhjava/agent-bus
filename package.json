@@ -5,8 +5,8 @@
   "license": "MIT",
   "author": "Rishabh Java",
   "type": "module",
-  "bin": { "agent-bus": "./server.mjs" },
-  "files": ["server.mjs", "lib/"],
+  "bin": { "agent-bus": "./cli.mjs" },
+  "files": ["cli.mjs", "server.mjs", "lib/"],
   "repository": { "type": "git", "url": "git+https://github.com/rishabhjava/agent-bus.git" },
   "homepage": "https://github.com/rishabhjava/agent-bus#readme",
   "bugs": { "url": "https://github.com/rishabhjava/agent-bus/issues" },
@@ -15,7 +15,8 @@
   "scripts": {
     "start": "node server.mjs",
     "smoke": "node test/smoke.mjs",
-    "check": "node --check server.mjs && for f in lib/*.mjs test/*.mjs; do node --check \"$f\"; done",
+    "test": "node --test test/install.test.mjs",
+    "check": "node --check cli.mjs && node --check server.mjs && for f in lib/*.mjs test/*.mjs; do node --check \"$f\"; done",
     "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
