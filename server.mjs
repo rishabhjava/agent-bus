@@ -11,7 +11,15 @@ import fs from "node:fs";
 import path from "node:path";
 import { BUS_HOME } from "./lib/util.mjs";
 
-const server = new McpServer({ name: "agent-bus", version: "0.1.0" });
+const server = new McpServer(
+  { name: "agent-bus", version: "0.1.0" },
+  {
+    instructions:
+      "agent-bus connects the coding agents installed on this machine (Claude Code, Codex, Cursor) so they can see and talk to each other. " +
+      "When the user asks what (other) agents or sessions are running, active, or working on this machine — or what another agent is doing or concluded — they mean these tools, not your own sub-agents: call list_sessions (or read_session / search_sessions). " +
+      "Use ask_agent to relay a question to another agent and get its answer, and handoff_session to move this or another session's work to a different agent.",
+  },
+);
 
 const agentEnum = z.enum(["claude", "codex", "cursor"]);
 
