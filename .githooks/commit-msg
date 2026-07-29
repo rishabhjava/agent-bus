@@ -1,0 +1,11 @@
+#!/bin/sh
+msg=$(head -1 "$1")
+case "$msg" in
+  Merge*|Revert*|fixup!*|squash!*) exit 0 ;;
+esac
+if ! printf '%s' "$msg" | grep -qE '^(feat|fix|docs|chore|refactor|test|perf|ci|build)(\([a-z0-9-]+\))?!?: .{1,72}$'; then
+  echo "commit-msg: use conventional commits — type(scope): subject (<=72 chars)" >&2
+  echo "  types: feat fix docs chore refactor test perf ci build" >&2
+  echo "  got: $msg" >&2
+  exit 1
+fi

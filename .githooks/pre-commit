@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+for f in $(git diff --cached --name-only --diff-filter=ACM | grep '\.mjs$' || true); do
+  node --check "$f"
+done

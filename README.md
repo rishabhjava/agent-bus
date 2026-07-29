@@ -49,13 +49,15 @@ So from inside any agent you can say things like:
 Requires Node 18+, macOS (session-store paths are macOS-specific for now), and whichever agents you use on the machine.
 
 ```bash
-git clone https://github.com/rishabhjava/agent-bus && cd agent-bus && npm install
-
-# register with each agent you use:
-claude mcp add --scope user agent-bus -- node "$PWD/server.mjs"
-codex mcp add agent-bus -- node "$PWD/server.mjs"
-# Cursor: add to ~/.cursor/mcp.json →  { "mcpServers": { "agent-bus": { "command": "node", "args": ["<path>/server.mjs"] } } }
+# register with each agent you use — npx fetches the package on first spawn:
+claude mcp add --scope user agent-bus -- npx -y agent-bus
+codex mcp add agent-bus -- npx -y agent-bus
+# Cursor: add to ~/.cursor/mcp.json →  { "mcpServers": { "agent-bus": { "command": "npx", "args": ["-y", "agent-bus"] } } }
 ```
+
+Or from a clone (for development): `git clone https://github.com/rishabhjava/agent-bus && cd agent-bus && npm install`, then register `node <path>/server.mjs` instead of `npx -y agent-bus`.
+
+> Codex note: Codex prompts for approval on an MCP server's first tool call ("always allow" persists it). Headless `codex exec` cannot answer that prompt — to use the bus headlessly, set `default_tools_approval_mode = "auto"` under `[mcp_servers.agent-bus]` in `~/.codex/config.toml`.
 
 New sessions of each agent pick the tools up automatically. Smoke-test without any agent:
 
