@@ -1,17 +1,39 @@
 {
-  "name": "agent-bus",
+  "name": "@rjava/agent-bus",
   "version": "0.1.0",
   "description": "A local communication bus for the coding agents on your machine — Claude Code, Codex, and Cursor discover each other's sessions, ask each other questions, and hand work across vendor lines. One MCP server, zero daemons.",
   "license": "MIT",
   "author": "Rishabh Java",
   "type": "module",
-  "bin": { "agent-bus": "./cli.mjs" },
-  "files": ["cli.mjs", "server.mjs", "lib/"],
-  "repository": { "type": "git", "url": "git+https://github.com/rishabhjava/agent-bus.git" },
+  "bin": {
+    "agent-bus": "cli.mjs"
+  },
+  "files": [
+    "cli.mjs",
+    "server.mjs",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rishabhjava/agent-bus.git"
+  },
   "homepage": "https://github.com/rishabhjava/agent-bus#readme",
-  "bugs": { "url": "https://github.com/rishabhjava/agent-bus/issues" },
-  "keywords": ["mcp", "model-context-protocol", "claude-code", "codex", "cursor", "agents", "interop", "session-handoff"],
-  "engines": { "node": ">=18.17" },
+  "bugs": {
+    "url": "https://github.com/rishabhjava/agent-bus/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude-code",
+    "codex",
+    "cursor",
+    "agents",
+    "interop",
+    "session-handoff"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
   "scripts": {
     "start": "node server.mjs",
     "smoke": "node test/smoke.mjs",
@@ -22,5 +44,8 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
     "zod": "^3.24.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -51,8 +51,8 @@ Requires Node 18+, macOS (session-store paths are macOS-specific for now), and w
 One command — detects which hosts are installed, registers the bus with each, merges with any existing MCP config, takes backups before rewriting anything, and is safe to re-run:
 
 ```bash
-npx -y agent-bus install            # registers with Claude Code, Codex, and Cursor
-npx -y agent-bus install --dry-run  # preview what would change, modify nothing
+npx -y @rjava/agent-bus install            # registers with Claude Code, Codex, and Cursor
+npx -y @rjava/agent-bus install --dry-run  # preview what would change, modify nothing
 ```
 
 Upgrades are automatic when registered via npx (`npx -y` resolves the latest published version each spawn); re-run `install` only if registration instructions change.
@@ -61,9 +61,9 @@ Upgrades are automatic when registered via npx (`npx -y` resolves the latest pub
 <summary>Manual registration</summary>
 
 ```bash
-claude mcp add --scope user agent-bus -- npx -y agent-bus
-codex mcp add agent-bus -- npx -y agent-bus
-# Cursor: add to ~/.cursor/mcp.json →  { "mcpServers": { "agent-bus": { "command": "npx", "args": ["-y", "agent-bus"] } } }
+claude mcp add --scope user agent-bus -- npx -y @rjava/agent-bus
+codex mcp add agent-bus -- npx -y @rjava/agent-bus
+# Cursor: add to ~/.cursor/mcp.json →  { "mcpServers": { "agent-bus": { "command": "npx", "args": ["-y", "@rjava/agent-bus"] } } }
 ```
 
 From a clone (for development): `git clone https://github.com/rishabhjava/agent-bus && cd agent-bus && npm install`, then `node cli.mjs install` — it registers the clone's path instead of npx.
